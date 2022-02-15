@@ -179,7 +179,7 @@ function refreshMovies() {
     movieRating.classList.add('movie__rating');
 
     const ratingStar = document.createElement('img');
-    ratingStar.src = './assets/estrelaa.svg';
+    ratingStar.src = './assets/estrela.svg';
     ratingStar.alt = 'Estrela';
 
     movieRating.append(ratingStar, movie.vote_average);
