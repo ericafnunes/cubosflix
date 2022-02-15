@@ -9,7 +9,7 @@ const highlightVideoLink = document.querySelector('.highlight__video-link');
 
 const body = document.querySelector('body');
 const modal = document.querySelector('.modal');
-const modalClose = document.querySelector('.modal__close');
+const modalClosee = document.querySelector('.modal__close');
 const modalTitle = document.querySelector('.modal__title');
 const modalImg = document.querySelector('.modal__img');
 const modalDescription = document.querySelector('.modal__description');
@@ -77,7 +77,7 @@ btnTheme.addEventListener('click', () => {
     btnTheme.src = './assets/dark-mode.svg';
     btnPrev.src = './assets/seta-esquerda-branca.svg';
     btnNext.src = './assets/seta-direita-branca.svg';
-    
+
     theme = 'dark';
   } else {
     body.style.setProperty('--background', '#FFF');
@@ -87,14 +87,14 @@ btnTheme.addEventListener('click', () => {
     btnTheme.src = './assets/light-mode.svg';
     btnPrev.src = './assets/seta-esquerda-preta.svg';
     btnNext.src = './assets/seta-direita-preta.svg';
-    
+
     theme = 'light';
   }
 
   localStorage.setItem('theme', theme);
 })
 
-modalClose.addEventListener('click', () => {
+modalClosee.addEventListener('click', () => {
   modal.classList.add('hidden');
   body.style.overflow = 'auto';
 });
@@ -119,20 +119,20 @@ input.addEventListener('keydown', (event) => {
 
 function loadDiscoverMovies() {
   fetch('https://tmdb-proxy.cubos-academy.workers.dev/3/discover/movie?language=pt-BR&include_adult=false')
-  .then(response => response.json())
-  .then(({ results }) => {  
-    moviesData = results;
-    refreshMovies();
-  });
+    .then(response => response.json())
+    .then(({ results }) => {
+      moviesData = results;
+      refreshMovies();
+    });
 }
 
 function loadFilteredMovies(filter) {
   fetch(`https://tmdb-proxy.cubos-academy.workers.dev/3/search/movie?language=pt-BR&include_adult=false&query=${filter}`)
-  .then(response => response.json())
-  .then(({ results }) => {  
-    moviesData = results;
-    refreshMovies();
-  });
+    .then(response => response.json())
+    .then(({ results }) => {
+      moviesData = results;
+      refreshMovies();
+    });
 }
 
 function refreshMovies() {
@@ -149,22 +149,22 @@ function refreshMovies() {
       body.style.overflow = 'hidden';
 
       fetch(`https://tmdb-proxy.cubos-academy.workers.dev/3/movie/${movie.id}?language=pt-BR`)
-      .then(response => response.json())
-      .then(movieData => {
-        modalTitle.textContent = movieData.title;
-        modalImg.src = movieData.backdrop_path;
-        modalImg.alt = movieData.title;
-        modalDescription.textContent = movieData.overview;
+        .then(response => response.json())
+        .then(movieData => {
+          modalTitle.textContent = movieData.title;
+          modalImg.src = movieData.backdrop_path;
+          modalImg.alt = movieData.title;
+          modalDescription.textContent = movieData.overview;
 
-        modalGenres.innerHTML = '';
-        movieData.genres.forEach(genre => {
-          const genreContainer = document.createElement('span');
-          genreContainer.classList.add('modal__genre');
-          genreContainer.textContent = genre.name;
-          modalGenres.append(genreContainer);
-        });          
-        modalAverage.textContent = movieData.vote_average;
-      });
+          modalGenres.innerHTML = '';
+          movieData.genres.forEach(genre => {
+            const genreContainer = document.createElement('span');
+            genreContainer.classList.add('modal__genre');
+            genreContainer.textContent = genre.name;
+            modalGenres.append(genreContainer);
+          });
+          modalAverage.textContent = movieData.vote_average;
+        });
     })
 
     const movieInfo = document.createElement('div');
@@ -177,11 +177,11 @@ function refreshMovies() {
 
     const movieRating = document.createElement('span');
     movieRating.classList.add('movie__rating');
-    
+
     const ratingStar = document.createElement('img');
     ratingStar.src = './assets/estrela.svg';
     ratingStar.alt = 'Estrela';
-    
+
     movieRating.append(ratingStar, movie.vote_average);
     movieInfo.append(movieTitle, movieRating);
     movieContainer.append(movieInfo);
@@ -193,19 +193,19 @@ function refreshMovies() {
 loadDiscoverMovies();
 
 fetch(`https://tmdb-proxy.cubos-academy.workers.dev/3/movie/436969/videos?language=pt-BR`)
-.then(response => response.json())
-.then(({ results }) => {
-  const [firstVideo] = results;
-  highlightVideoLink.href = `https://www.youtube.com/watch?v=${firstVideo.key}`;
-})
+  .then(response => response.json())
+  .then(({ results }) => {
+    const [firstVideo] = results;
+    highlightVideoLink.href = `https://www.youtube.com/watch?v=${firstVideo.key}`;
+  })
 
 fetch(`https://tmdb-proxy.cubos-academy.workers.dev/3/movie/436969?language=pt-BR`)
-.then(response => response.json())
-.then(movieData => {
-  highlightVideo.style.background = `linear-gradient(rgba(0, 0, 0, 0.6) 100%, rgba(0, 0, 0, 0.6) 100%), url('${movieData.backdrop_path}') no-repeat center / cover`;
-  highlightTitle.textContent = movieData.title;
-  highlightRating.textContent = movieData.vote_average;
-  highlightGenres.textContent = movieData.genres.map(genre => genre.name).join(', ');
-  highlightLaunch.textContent = (new Date(movieData.release_date)).toLocaleDateString('pt-BR', { year: 'numeric', month: 'long', day: 'numeric' });
-  highlightDescription.textContent = movieData.overview
-});
+  .then(response => response.json())
+  .then(movieData => {
+    highlightVideo.style.background = `linear-gradient(rgba(0, 0, 0, 0.6) 100%, rgba(0, 0, 0, 0.6) 100%), url('${movieData.backdrop_path}') no-repeat center / cover`;
+    highlightTitle.textContent = movieData.title;
+    highlightRating.textContent = movieData.vote_average;
+    highlightGenres.textContent = movieData.genres.map(genre => genre.name).join(', ');
+    highlightLaunch.textContent = (new Date(movieData.release_date)).toLocaleDateString('pt-BR', { year: 'numeric', month: 'long', day: 'numeric' });
+    highlightDescription.textContent = movieData.overview
+  });
