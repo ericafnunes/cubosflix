@@ -8,6 +8,9 @@
 * Modal de filme
 * Mudança de tema - dark e light
 
+####  :arrow_down: Link do deploy:
+<a src="https://cuboxflix.netlify.app/">https://cuboxflix.netlify.app/</a>
+
 
 ### :floppy_disk: Download - Para clonar o repositório
 #### com a chave ssh:
